@@ -65,7 +65,7 @@ def fetch_instr(ticker):
     return df
 
 
-def build_plot(ticker):
+def build_plot(ticker, instrument_variables):
     df = fetch_instr(ticker)
 
     # prepare some data

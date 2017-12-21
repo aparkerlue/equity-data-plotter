@@ -18,8 +18,44 @@
   </head>
   <body>
     <form action="{{ url_for('instrumdat.request_ticker') }}" method="get">
-      <input name="ticker" placeholder="Ticker symbol (e.g., AAPL)" />
-      <input type="submit" value="Submit" />
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <input name="ticker" placeholder="Ticker symbol (e.g., AAPL)" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input name="instr_variable" type="checkbox" value="close" checked />
+              <label>Closing price</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input name="instr_variable" type="checkbox" value="adj_close" />
+              <label>Adjusted closing price</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input name="instr_variable" type="checkbox" value="open" />
+              <label>Opening price</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input name="instr_variable" type="checkbox" value="adj_open" />
+              <label>Adjusted opening price</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="submit" value="Submit" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </form>
 
     {% for message in get_flashed_messages() %}
