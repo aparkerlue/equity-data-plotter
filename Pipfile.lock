@@ -1,20 +1,20 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "346533875e003f2b2b04e97b79b60b6239cf7a17928d7b53a52611ef26c357ce"
+            "sha256": "18cbd8351763e21090eab15602885407dc6437d8d526f21db889193161ecd234"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
-            "implementation_version": "3.6.4",
+            "implementation_version": "3.6.3",
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "3.13.0-135-generic",
-            "platform_system": "Linux",
-            "platform_version": "#184-Ubuntu SMP Wed Oct 18 11:55:51 UTC 2017",
-            "python_full_version": "3.6.4",
+            "platform_release": "17.3.0",
+            "platform_system": "Darwin",
+            "platform_version": "Darwin Kernel Version 17.3.0: Thu Nov  9 18:09:22 PST 2017; root:xnu-4570.31.3~1/RELEASE_X86_64",
+            "python_full_version": "3.6.3",
             "python_version": "3.6",
-            "sys_platform": "linux"
+            "sys_platform": "darwin"
         },
         "pipfile-spec": 6,
         "requires": {
