@@ -15,10 +15,8 @@ def read_configuration(configfile):
 
 
 app = Flask(__name__)
+app.config.update(dict(
+    SECRET_KEY=b'vrjb94nmfkdkivhedk',
+))
 app.config['instrumdat'] = read_configuration('config.yaml')
 app.register_blueprint(instrumdat)
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
