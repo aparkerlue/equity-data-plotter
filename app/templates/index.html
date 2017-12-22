@@ -10,6 +10,7 @@
     {% else %}
     <title>Historical Stock Data Look-Up</title>
     {% endif %}
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     {% if script is defined %}
     <link rel="stylesheet" href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
     <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
@@ -18,44 +19,31 @@
   </head>
   <body>
     <form action="{{ url_for('instrumdat.request_ticker') }}" method="get">
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <input name="ticker" placeholder="Ticker symbol (e.g., AAPL)" />
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input name="instr_variable" type="checkbox" value="close" checked />
-              <label>Closing price</label>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input name="instr_variable" type="checkbox" value="adj_close" />
-              <label>Adjusted closing price</label>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input name="instr_variable" type="checkbox" value="open" />
-              <label>Opening price</label>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input name="instr_variable" type="checkbox" value="adj_open" />
-              <label>Adjusted opening price</label>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input type="submit" value="Submit" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div>
+        <div>
+          <input name="ticker" type="text" size="30" placeholder="Ticker symbol (e.g., AAPL)" required/>
+        </div>
+        <div>
+          <input name="instr_variable" type="checkbox" value="close" checked />
+          <label>Closing price</label>
+        </div>
+        <div>
+          <input name="instr_variable" type="checkbox" value="adj_close" />
+          <label>Adjusted closing price</label>
+        </div>
+        <div>
+          <input name="instr_variable" type="checkbox" value="open" />
+          <label>Opening price</label>
+        </div>
+        <div>
+          <input name="instr_variable" type="checkbox" value="adj_open" />
+          <label>Adjusted opening price</label>
+        </div>
+        <div>
+          <button>Select all</button>
+          <input type="submit" value="Submit" />
+        </div>
+      </div>
     </form>
 
     {% for message in get_flashed_messages() %}

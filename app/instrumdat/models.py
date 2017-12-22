@@ -33,13 +33,13 @@ def _fetch_instr(instrumdat_key):
             'cannot fetch data as of {}'.format(instrumdat_key.date)
         )
 
-    apikey = current_app.config['instrumdat']['apikey']
+    api_key = current_app.config['quandl_api_key']
     url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json'
 
     logging.info("Fetching data for ticker `{}'".format(ticker))
     r = requests.get(url, params={
         'ticker': ticker,
-        'api_key': apikey,
+        'api_key': api_key,
     })
     logging.info("{}".format(r.url))
     logging.info("Status code: {}".format(r.status_code))
@@ -67,30 +67,46 @@ def fetch_instr(ticker):
 
 def build_plot(ticker, instrument_variables):
     df = fetch_instr(ticker)
+    n = min(len(df), 252)
+    df = df[-n:]
 
     # prepare some data
-    close = np.array(df['adj_close'])
-    dates = np.array(df['date'], dtype=np.datetime64)
-
-    window_size = 30
+    dates = np.array(df['date'].values, dtype=np.datetime64)
+    window_size = 21
     window = np.ones(window_size) / float(window_size)
-    avg = np.convolve(close, window, 'same')
 
     # create a new plot with a a datetime axis type
     p = figure(width=800, height=350, x_axis_type="datetime")
 
     # add renderers
-    p.circle(dates, close, size=4, color='darkgrey',
-             alpha=0.2, legend='close')
-    p.line(dates, avg, color='navy', legend='avg')
+    if 'close' in instrument_variables:
+        p.circle(dates, df['close'],
+                 size=4, color='darkgrey', alpha=0.2, legend='close')
+        avg = np.convolve(df['close'], window, 'same')
+        p.line(dates, avg, color='navy', legend='avg close')
+    if 'adj_close' in instrument_variables:
+        p.circle(dates, df['adj_close'],
+                 size=4, color='darkgreen', alpha=0.2, legend='adj_close')
+        avg = np.convolve(df['adj_close'], window, 'same')
+        p.line(dates, avg, color='green', legend='avg adj_close')
+    if 'open' in instrument_variables:
+        p.circle(dates, df['open'],
+                 size=4, color='darkred', alpha=0.2, legend='open')
+        avg = np.convolve(df['open'], window, 'same')
+        p.line(dates, avg, color='red', legend='avg open')
+    if 'adj_open' in instrument_variables:
+        p.circle(dates, df['adj_open'],
+                 size=4, color='orange', alpha=0.2, legend='adj_open')
+        avg = np.convolve(df['adj_open'], window, 'same')
+        p.line(dates, avg, color='brown', legend='avg adj_open')
 
-    # NEW: customize by setting attributes
-    p.title.text = "df One-Month Average"
+    # customize by setting attributes
+    p.title.text = "One-month average"
     p.legend.location = "top_left"
     p.grid.grid_line_alpha = 0
     p.xaxis.axis_label = 'Date'
     p.yaxis.axis_label = 'Price'
-    p.ygrid.band_fill_color = "olive"
+    p.ygrid.band_fill_color = "orange"
     p.ygrid.band_fill_alpha = 0.1
 
     return components(p)
