@@ -16,34 +16,40 @@ INSTRUMENT_VARIABLES = (
 
 @instrumdat.route('/')
 def show_index():
-    if len(request.args) > 0:
-        args = {'ticker': request.args['ticker'].upper()}
-        args.update({k: v for k, v in request.args.items() if k != 'ticker'})
+    if not request.args:
+        return render_template('index.html')
+
+    if 'ticker' in request.args:
+        args = {
+            'ticker': request.args['ticker'].upper(),
+            **{k: v for k, v in request.args.items() if k != 'ticker'},
+        }
         return redirect(url_for('instrumdat.show', **args))
     else:
-        return render_template('index.html')
+        abort(404)
 
 
 @instrumdat.route('/<ticker>')
 def show(ticker):
+    if ticker != ticker.upper():
+        args = {'ticker': ticker.upper(), **request.args}
+        return redirect(url_for('instrumdat.show', **args))
+
     instrvars = [x for x in request.args if x in INSTRUMENT_VARIABLES]
-    args = {
-        'ticker': ticker,
-        'selections': instrvars,
-    }
-    if not instrvars:
-        flash("Please select a variable.")
+    args = {'ticker': ticker, 'selections': instrvars}
+
+    try:
+        tickdat = models.fetch_instr(ticker)
+    except ValueError:
+        flash("Unable to fetch data for ticker `{}'".format(ticker))
     else:
-        try:
-            tickdat = models.fetch_instr(ticker)
-        except ValueError:
-            flash("Unable to fetch data for ticker `{}'".format(ticker))
-        else:
-            comps = models.build_plot(tickdat, instrvars)
-            args.update({
-                'script': comps[0],
-                'div': comps[1],
-            })
+        if not instrvars:
+            instrvars.append('close')
+        comps = models.build_plot(tickdat, instrvars)
+        args.update({
+            'script': comps[0],
+            'div': comps[1],
+        })
 
     try:
         return render_template('index.html', **args)

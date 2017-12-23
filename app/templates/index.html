@@ -20,7 +20,7 @@
   <body>
     <form action="{{ url_for('instrumdat.show_index') }}" method="gt">
       <fieldset>
-        <legend>Inputs</legend>
+        <legend>Ticker inputs</legend>
         <input name="ticker" type="text" size="30" placeholder="Ticker symbol (e.g., AAPL)" {{ ('value="{}" '.format(ticker) if ticker is defined) | safe }}required /><br />
 
         <input type="checkbox" name="close" {{ 'checked ' if selections is defined and 'close' in selections else '' }}/>
