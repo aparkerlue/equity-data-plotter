@@ -1,6 +1,6 @@
 # Equity Data Plotter
 
-*[2017-12-23 Sat]*
+Web application for plotting historical equity data
 
 ## To run
 
