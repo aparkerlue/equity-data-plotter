@@ -29,9 +29,8 @@ class InstrumdatKey:
 def _fetch_instr(instrumdat_key):
     ticker = instrumdat_key.ticker
     if instrumdat_key.date != datetime.date.today():
-        raise ValueError(
-            'cannot fetch data as of {}'.format(instrumdat_key.date)
-        )
+        s = 'cannot fetch data as of {}'
+        raise ValueError(s.format(instrumdat_key.date))
 
     api_key = current_app.config['quandl_api_key']
     url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json'
@@ -41,7 +40,7 @@ def _fetch_instr(instrumdat_key):
         'ticker': ticker,
         'api_key': api_key,
     })
-    logging.info("{}".format(r.url))
+    logging.info("{}".format(r.url.replace(api_key, 'API_KEY')))
     logging.info("Status code: {}".format(r.status_code))
     if r.status_code != 200:
         raise ValueError("invalid ticker `{}'".format(ticker))
