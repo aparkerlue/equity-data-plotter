@@ -113,9 +113,8 @@ def build_plot(df, instrument_variables, maxdays=252):
         p.line(dates, avg, color='brown', legend='avg adj_open')
 
     # customize by setting attributes
-    p.title.text = "One-month moving average, as of {}".format(
-        max(dates)
-    )
+    p.title.text = \
+        "One-month moving average, as of {}".format(max(dates))
     p.legend.location = "top_left"
     p.grid.grid_line_alpha = 0
     p.xaxis.axis_label = 'Date'

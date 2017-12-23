@@ -24,16 +24,16 @@ def show_index():
             'ticker': request.args['ticker'].upper(),
             **{k: v for k, v in request.args.items() if k != 'ticker'},
         }
-        return redirect(url_for('instrumdat.show', **args))
+        return redirect(url_for('instrumdat.plot_ticker', **args))
     else:
         abort(404)
 
 
 @instrumdat.route('/<ticker>')
-def show(ticker):
+def plot_ticker(ticker):
     if ticker != ticker.upper():
         args = {'ticker': ticker.upper(), **request.args}
-        return redirect(url_for('instrumdat.show', **args))
+        return redirect(url_for('instrumdat.plot_ticker', **args))
 
     instrvars = [x for x in request.args if x in INSTRUMENT_VARIABLES]
     args = {'ticker': ticker, 'selections': instrvars}
