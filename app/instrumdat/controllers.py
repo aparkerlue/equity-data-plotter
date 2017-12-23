@@ -6,44 +6,46 @@ from . import models
 
 instrumdat = Blueprint('instrumdat', __name__)
 
-instrument_variables = {
-    'close': True,
-    'adj_close': False,
-    'open': False,
-    'adj_open': False,
-}
+INSTRUMENT_VARIABLES = (
+    'close',
+    'adj_close',
+    'open',
+    'adj_open',
+)
 
 
 @instrumdat.route('/')
+def show_index():
+    if len(request.args) > 0:
+        args = {'ticker': request.args['ticker'].upper()}
+        args.update({k: v for k, v in request.args.items() if k != 'ticker'})
+        return redirect(url_for('instrumdat.show', **args))
+    else:
+        return render_template('index.html')
+
+
 @instrumdat.route('/<ticker>')
-def show(ticker=None):
-    # return str(models.fetch_instr(ticker))
-    try:
-        comps = models.build_plot(
-            ticker,
-            [k for k, v in instrument_variables.items() if v],
-        )
-    except ValueError:
-        comps = None
+def show(ticker):
+    instrvars = [x for x in request.args if x in INSTRUMENT_VARIABLES]
+    args = {
+        'ticker': ticker,
+        'selections': instrvars,
+    }
+    if not instrvars:
+        flash("Please select a variable.")
+    else:
+        try:
+            tickdat = models.fetch_instr(ticker)
+        except ValueError:
+            flash("Unable to fetch data for ticker `{}'".format(ticker))
+        else:
+            comps = models.build_plot(tickdat, instrvars)
+            args.update({
+                'script': comps[0],
+                'div': comps[1],
+            })
 
     try:
-        if comps is not None:
-            return render_template(
-                'index.html',
-                ticker=ticker,
-                script=comps[0],
-                div=comps[1],
-            )
-        else:
-            flash("Unable to fetch data for ticker `{}'".format(ticker))
-            return render_template('index.html')
+        return render_template('index.html', **args)
     except TemplateNotFound:
         abort(404)
-
-
-@instrumdat.route('/request-ticker', methods=['GET'])
-def request_ticker():
-    ticker = request.args.get('ticker').upper()
-    for k in instrument_variables:
-        instrument_variables[k] = k in request.args.getlist('instr_variable')
-    return redirect(url_for('instrumdat.show', ticker=ticker))

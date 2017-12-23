@@ -18,39 +18,32 @@
     {% endif %}
   </head>
   <body>
-    <form action="{{ url_for('instrumdat.request_ticker') }}" method="get">
-      <div>
-        <div>
-          <input name="ticker" type="text" size="30" placeholder="Ticker symbol (e.g., AAPL)" required/>
-        </div>
-        <div>
-          <input name="instr_variable" type="checkbox" value="close" checked />
-          <label>Closing price</label>
-        </div>
-        <div>
-          <input name="instr_variable" type="checkbox" value="adj_close" />
-          <label>Adjusted closing price</label>
-        </div>
-        <div>
-          <input name="instr_variable" type="checkbox" value="open" />
-          <label>Opening price</label>
-        </div>
-        <div>
-          <input name="instr_variable" type="checkbox" value="adj_open" />
-          <label>Adjusted opening price</label>
-        </div>
-        <div>
-          <button>Select all</button>
-          <input type="submit" value="Submit" />
-        </div>
-      </div>
+    <form action="{{ url_for('instrumdat.show_index') }}" method="gt">
+      <fieldset>
+        <legend>Inputs</legend>
+        <input name="ticker" type="text" size="30" placeholder="Ticker symbol (e.g., AAPL)" {{ ('value="{}" '.format(ticker) if ticker is defined) | safe }}required /><br />
+
+        <input type="checkbox" name="close" {{ 'checked ' if selections is defined and 'close' in selections else '' }}/>
+        <label>Closing price</label><br />
+
+        <input type="checkbox" name="adj_close" {{ 'checked ' if selections is defined and 'adj_close' in selections else '' }}/>
+        <label>Adjusted closing price</label><br />
+
+        <input type="checkbox" name="open" {{ 'checked ' if selections is defined and 'open' in selections else '' }}/>
+        <label>Opening price</label><br />
+
+        <input type="checkbox" name="adj_open" {{ 'checked ' if selections is defined and 'adj_open' in selections else '' }}/>
+        <label>Adjusted opening price</label><br />
+
+        <input type="submit" value="Submit" />
+      </fieldset>
     </form>
 
     {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
     {% endfor %}
 
-    {% if ticker is defined %}
+    {% if ticker is defined and script is defined and div is defined %}
     <h1>{{ ticker }}</h1>
     {% endif %}
     {% if script is defined %}
