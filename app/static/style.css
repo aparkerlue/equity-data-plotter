@@ -1,0 +1,60 @@
+html
+{
+    font-family: "Open Sans", sans-serif;
+}
+
+body
+{
+    padding: 0.5em 1.5em;
+}
+
+h1 a
+{
+    color: inherit;
+    text-decoration: inherit;
+}
+
+h1 a:hover
+{
+    text-decoration: underline;
+}
+
+.column
+{
+    float: left;
+}
+
+.left {
+    width: 15em;
+}
+
+.right {
+    width: calc(100% - 18em);
+    padding: 0.5em 1em;
+}
+
+@media (max-width: 600px) {
+    .column {
+        width: 100%;
+    }
+}
+
+.row:after
+{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.plot
+{
+    width: 100%;
+    margin: 0 auto;
+    border: 3px solid #73AD21;
+}
+
+.bk-root
+{
+    width: 800px;
+    margin: auto;
+}

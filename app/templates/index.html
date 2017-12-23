@@ -16,37 +16,45 @@
     <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
     {{ script | indent(4) | safe }}
     {% endif %}
+    <link rel="stylesheet" href="/static/style.css" type="text/css" />
   </head>
   <body>
-    <form action="{{ url_for('instrumdat.show_index') }}" method="gt">
-      <fieldset>
-        <legend>Ticker inputs</legend>
-        <input name="ticker" type="text" size="30" placeholder="Ticker symbol (e.g., AAPL)" {{ ('value="{}" '.format(ticker) if ticker is defined) | safe }}required /><br />
+    <h1><a href="{{ url_for('instrumdat.show_index') }}">Equity Data Plotter</a></h1>
+    <div class="row">
+      <div class="column left">
+        <form action="{{ url_for('instrumdat.show_index') }}" method="get">
+          <fieldset>
+            <legend>Ticker inputs</legend>
+            <input name="ticker" type="text" size="30" placeholder="Ticker symbol (e.g., AAPL)" {{ ('value="{}" '.format(ticker) if ticker is defined) | safe }}required /><br />
 
-        <input type="checkbox" name="close" {{ 'checked ' if selections is defined and 'close' in selections else '' }}/>
-        <label>Closing price</label><br />
+            <input type="checkbox" name="close" {{ 'checked ' if selections is defined and 'close' in selections else '' }}/>
+            <label>Closing price</label><br />
 
-        <input type="checkbox" name="adj_close" {{ 'checked ' if selections is defined and 'adj_close' in selections else '' }}/>
-        <label>Adjusted closing price</label><br />
+            <input type="checkbox" name="adj_close" {{ 'checked ' if selections is defined and 'adj_close' in selections else '' }}/>
+            <label>Adjusted closing price</label><br />
 
-        <input type="checkbox" name="open" {{ 'checked ' if selections is defined and 'open' in selections else '' }}/>
-        <label>Opening price</label><br />
+            <input type="checkbox" name="open" {{ 'checked ' if selections is defined and 'open' in selections else '' }}/>
+            <label>Opening price</label><br />
 
-        <input type="checkbox" name="adj_open" {{ 'checked ' if selections is defined and 'adj_open' in selections else '' }}/>
-        <label>Adjusted opening price</label><br />
+            <input type="checkbox" name="adj_open" {{ 'checked ' if selections is defined and 'adj_open' in selections else '' }}/>
+            <label>Adjusted opening price</label><br />
 
-        <input type="submit" value="Submit" />
-      </fieldset>
-    </form>
+            <input type="submit" value="Submit" />
+          </fieldset>
+        </form>
+      </div>
+      <div class="column right">
+        Enter the ticker inputs and click <code>Submit</code> to plot
+        recent historical data on an equity instrument.
+      </div>
+    </div>
 
     {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
     {% endfor %}
 
     {% if ticker is defined and script is defined and div is defined %}
-    <h1>{{ ticker }}</h1>
-    {% endif %}
-    {% if script is defined %}
+    <h2>{{ ticker }}</h2>
     {{ div | indent(4) | safe }}
     {% endif %}
   </body>
