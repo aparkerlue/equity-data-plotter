@@ -1,0 +1,2 @@
+graft edp/templates
+graft edp/static

@@ -8,6 +8,7 @@ name = "pypi"
 [dev-packages]
 
 ipython = "*"
+"e1839a8" = {path = ".", editable = true}
 
 
 [packages]
@@ -15,7 +16,7 @@ ipython = "*"
 gunicorn = "*"
 requests = "*"
 cachetools = "*"
-Flask = "*"
+flask = "*"
 pandas = "*"
 bokeh = "*"
 
