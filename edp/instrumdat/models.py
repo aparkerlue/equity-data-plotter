@@ -26,7 +26,7 @@ class InstrumdatKey:
 
 
 @cached(cache={})
-def _fetch_instr(instrumdat_key):
+def _fetch_instr(instrumdat_key, years=1):
     ticker = instrumdat_key.ticker
     if instrumdat_key.date != datetime.date.today():
         s = 'cannot fetch data as of {}'
@@ -35,9 +35,11 @@ def _fetch_instr(instrumdat_key):
     api_key = current_app.config['QUANDL_API_KEY']
     url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json'
 
+    start = instrumdat_key.date - datetime.timedelta(days=years * 365)
     logging.info("Fetching data for ticker `{}'".format(ticker))
     r = requests.get(url, params={
         'ticker': ticker,
+        'date.gt': start.isoformat(),
         'api_key': api_key,
     })
     logging.info("{}".format(r.url.replace(api_key, 'API_KEY')))
