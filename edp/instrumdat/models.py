@@ -32,7 +32,7 @@ def _fetch_instr(instrumdat_key):
         s = 'cannot fetch data as of {}'
         raise ValueError(s.format(instrumdat_key.date))
 
-    api_key = current_app.config['quandl_api_key']
+    api_key = current_app.config['QUANDL_API_KEY']
     url = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json'
 
     logging.info("Fetching data for ticker `{}'".format(ticker))

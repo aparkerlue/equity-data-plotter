@@ -1,2 +1,0 @@
-secret_key_file: flask_secret_key.txt
-quandl_api_key_file: quandl_api_key.txt

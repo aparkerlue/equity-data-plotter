@@ -7,17 +7,17 @@ name = "pypi"
 
 [dev-packages]
 
+ipython = "*"
 
 
 [packages]
 
 gunicorn = "*"
 requests = "*"
+cachetools = "*"
+Flask = "*"
 pandas = "*"
 bokeh = "*"
-flask = "*"
-pyyaml = "*"
-cachetools = "*"
 
 
 [requires]
