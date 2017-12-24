@@ -94,24 +94,24 @@ def build_plot(df, instrument_variables, maxdays=252):
     # add renderers
     if 'close' in instrument_variables:
         p.circle(dates, df['close'],
-                 size=4, color='darkgrey', alpha=0.2, legend='close')
+                 size=4, color='darkgrey', alpha=0.2, legend='Close')
         avg = moving_average(df['close'], window)
-        p.line(dates, avg, color='navy', legend='avg close')
+        p.line(dates, avg, color='navy', legend='Average close')
     if 'adj_close' in instrument_variables:
         p.circle(dates, df['adj_close'],
-                 size=4, color='darkgreen', alpha=0.2, legend='adj_close')
+                 size=4, color='darkgreen', alpha=0.2, legend='Adjusted close')
         avg = moving_average(df['adj_close'], window)
-        p.line(dates, avg, color='green', legend='avg adj_close')
+        p.line(dates, avg, color='green', legend='Avg. adj. close')
     if 'open' in instrument_variables:
         p.circle(dates, df['open'],
-                 size=4, color='darkred', alpha=0.2, legend='open')
+                 size=4, color='darkred', alpha=0.2, legend='Open')
         avg = moving_average(df['open'], window)
-        p.line(dates, avg, color='red', legend='avg open')
+        p.line(dates, avg, color='red', legend='Average open')
     if 'adj_open' in instrument_variables:
         p.circle(dates, df['adj_open'],
-                 size=4, color='orange', alpha=0.2, legend='adj_open')
+                 size=4, color='orange', alpha=0.2, legend='Adjusted open')
         avg = moving_average(df['adj_open'], window)
-        p.line(dates, avg, color='brown', legend='avg adj_open')
+        p.line(dates, avg, color='brown', legend='Avg. adj. open')
 
     # customize by setting attributes
     p.title.text = \
