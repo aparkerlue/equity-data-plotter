@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Plot historical stock prices." />
     <meta name="author" content="@aparkerlue">
-    {% if ticker is defined %}
-    <title>Historical Stock Data: {{ ticker }}</title>
-    {% else %}
-    <title>Historical Stock Data Look-Up</title>
-    {% endif %}
+    <title>Equity Data Plotter{{ ': {}'.format(ticker) if ticker is defined else '' }}</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
     {% if script is defined %}
     <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
