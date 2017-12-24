@@ -8,8 +8,8 @@
     <title>Equity Data Plotter{{ ': {}'.format(ticker) if ticker is defined else '' }}</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
     {% if script is defined %}
-    <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
-    <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
+    <link rel="stylesheet" href="//cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
+    <script type="text/javascript" src="//cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
     {{ script }}
     {% endif %}
     <link rel="stylesheet" href="/static/style.css" type="text/css" />
