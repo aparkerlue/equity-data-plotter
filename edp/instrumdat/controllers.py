@@ -1,5 +1,6 @@
 from flask import (
-    Blueprint, abort, flash, redirect, render_template, request, url_for
+    Blueprint, Markup, abort, flash, redirect, render_template, request,
+    url_for
 )
 from jinja2 import TemplateNotFound
 from . import models
@@ -41,14 +42,15 @@ def plot_ticker(ticker):
     try:
         tickdat = models.fetch_instr(ticker)
     except ValueError:
-        flash("Unable to fetch data for ticker `{}'".format(ticker))
+        s = "Unable to fetch data for ticker <code>{}</code>".format(ticker)
+        flash(Markup(s))
     else:
         if not instrvars:
             instrvars.append('close')
         comps = models.build_plot(tickdat, instrvars)
         args.update({
-            'script': comps[0],
-            'div': comps[1],
+            'script': Markup(comps[0]),
+            'div': Markup(comps[1]),
         })
 
     try:

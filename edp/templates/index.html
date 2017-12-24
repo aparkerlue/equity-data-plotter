@@ -10,7 +10,7 @@
     {% if script is defined %}
     <link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" type="text/css" />
     <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
-    {{ script | indent(4) | safe }}
+    {{ script }}
     {% endif %}
     <link rel="stylesheet" href="/static/style.css" type="text/css" />
   </head>
@@ -46,12 +46,12 @@
     </div>
 
     {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
+    <div class="flash warning">{{ message }}</div>
     {% endfor %}
 
     {% if ticker is defined and script is defined and div is defined %}
     <h2>{{ ticker }}</h2>
-    {{ div | indent(4) | safe }}
+    {{ div }}
     {% endif %}
   </body>
 </html>
